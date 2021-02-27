@@ -89,7 +89,7 @@ public class MultiRabbitAutoConfiguration {
         /**
          * Creates a new MultiRabbitConnectionFactoryCreator for instantiation of beans.
          *
-         * @param springFactoryCreator   The RabbitConnectionFactoryCreator.
+         * @param springFactoryCreator The RabbitConnectionFactoryCreator.
          */
         MultiRabbitConnectionFactoryCreator(
                 final RabbitAutoConfiguration.RabbitConnectionFactoryCreator springFactoryCreator) {
@@ -110,7 +110,7 @@ public class MultiRabbitAutoConfiguration {
         /**
          * Returns the empty wrapper if non is provided.
          *
-         * @return  the empty wrapper if non is provided.
+         * @return the empty wrapper if non is provided.
          */
         @Bean
         @ConditionalOnMissingBean
@@ -121,10 +121,15 @@ public class MultiRabbitAutoConfiguration {
         /**
          * Returns the routing connection factory populated with the connection factories provided from configuration.
          *
-         * @param rabbitProperties      The default rabbit properties.
-         * @param multiRabbitProperties The additional rabbit properties.
-         * @param externalWrapper       The external wrapper for integration.
+         * @param rabbitProperties          The default rabbit properties.
+         * @param multiRabbitProperties     The additional rabbit properties.
+         * @param externalWrapper           The external wrapper for integration.
+         * @param resourceLoader            Strategy interface for loading resources.
+         * @param credentialsProvider       Provider interface for credentials.
+         * @param credentialsRefreshService Provider interface to refresh credentials.
+         * @param connectionNameStrategy    A strategy to build application-specific connection names.
          * @return The routing connection factory.
+         * @throws Exception if found any issue to instantiate and register the beans.
          */
         @Primary
         @Bean(MultiRabbitConstants.CONNECTION_FACTORY_BEAN_NAME)
