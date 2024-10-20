@@ -1,6 +1,5 @@
 # Spring MultiRabbit
-[![Latest release](https://maven-badges.herokuapp.com/maven-central/com.free-now.multirabbit/spring-multirabbit/badge.svg)](https://mvnrepository.com/artifact/com.free-now.multirabbit/spring-multirabbit)
-![Build Status](https://github.com/freenowtech/spring-multirabbit/actions/workflows/maven.yml/badge.svg)
+![Build Status](https://github.com/rwanderc/spring-multirabbit/actions/workflows/maven.yml/badge.svg)
 
 **Spring MultiRabbit** is a library to enable multiple RabbitMQ brokers in SpringBoot applications. The modules are:
 * **spring-multirabbit** - the main module, that provides the auto-configuration feature;
@@ -42,7 +41,7 @@ Add the reference to the repository, and the necessary libs:
         <artifactId>spring-boot-starter-amqp</artifactId>
     </dependency>
     <dependency>
-        <groupId>com.free-now.multirabbit</groupId>
+        <groupId>com.wandercosta.multirabbit</groupId>
         <artifactId>spring-multirabbit</artifactId>
         <version>${multirabbit.version}</version>
     </dependency>
@@ -202,7 +201,7 @@ spring:
 ```
 
 ## Compatibility of versions
-For the table of compatibility, please visit the [Wiki](https://github.com/freenowtech/spring-multirabbit/wiki) page.
+WIP
 
 ## More Examples
 More examples can be found at the modules **spring-multirabbit-example-java** and **spring-multirabbit-example-kotlin**.
