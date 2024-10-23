@@ -54,22 +54,21 @@ jobs:
         uses: qcastel/github-actions-maven-release@v1.12.25
         with:
           release-branch-name: ${{ env.BRANCH_NAME }}
+          maven-args: "-DskipTests -DskipITs"
 
           gpg-enabled: true
-          gpg-key-id: ${{ secrets.FREE_NOW_GPG_KEY_ID }}
-          gpg-key: ${{ secrets.FREE_NOW_GPG_KEY }}
-          gpg-passphrase: ${{ secrets.FREE_NOW_GPG_PASSPHRASE }}
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+          gpg-key: ${{ secrets.GPG_KEY }}
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-          ssh-private-key: ${{ secrets.FREE_NOW_GITHUB_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-          git-release-bot-name: "free-now-github"
-          git-release-bot-email: "70742378+free-now-github@users.noreply.github.com"
+          git-release-bot-name: "bot-idhub"
+          git-release-bot-email: "bot@idhub.io"
           git-skip-sanity-check: true
 
           maven-repo-server-id: ossrh
-          maven-repo-server-username: ${{ secrets.FREE_NOW_GITHUB_USER }}
-          maven-repo-server-password: ${{ secrets.FREE_NOW_MAVEN_ACCESS_TOKEN }}
-          maven-args: "-DskipTests -DskipITs"
-
+          maven-repo-server-username: ${{ secrets.GITHUB_USER }}
+          maven-repo-server-password: ${{ secrets.MAVEN_ACCESS_TOKEN }}
         env:
           JAVA_HOME: /usr/lib/jvm/java-1.8-openjdk/
