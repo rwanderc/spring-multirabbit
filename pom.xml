@@ -43,18 +43,19 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
 
-        <springboot.version>2.7.0</springboot.version>
+        <springboot.version>3.0.0</springboot.version>
+        <javax-validation.version>2.0.1.Final</javax-validation.version>
         <testcontainers-rabbitmq.version>1.17.1</testcontainers-rabbitmq.version>
         <java-jna.version>5.8.0</java-jna.version>
 
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
+        <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
+        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.10.1</maven-javadoc-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
     </properties>
 
