@@ -60,7 +60,7 @@ public class MultiRabbitAutoConfiguration {
     @Bean(MultiRabbitConstants.CONNECTION_FACTORY_CREATOR_BEAN_NAME)
     @ConditionalOnProperty(prefix = "spring.multirabbitmq", name = "enabled", havingValue = "true")
     public RabbitConnectionFactoryCreator rabbitConnectionFactoryCreator(final RabbitProperties properties) {
-        return new RabbitConnectionFactoryCreator(properties, null);
+        return new RabbitConnectionFactoryCreator(properties);
     }
 
     @Primary

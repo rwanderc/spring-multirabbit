@@ -27,7 +27,7 @@ class MultiRabbitConnectionFactoryCreatorMapTest {
         final RabbitProperties rabbitProperties = new RabbitProperties();
 
         final Map<String, RabbitConnectionFactoryCreator> creators
-                = Map.of(dummyKey, new RabbitConnectionFactoryCreator(rabbitProperties, null));
+                = Map.of(dummyKey, new RabbitConnectionFactoryCreator(rabbitProperties));
 
         final MultiRabbitConnectionFactoryCreatorMap multiRabbitConnectionFactoryCreatorMap
                 = new MultiRabbitConnectionFactoryCreatorMap(creators);

@@ -30,7 +30,7 @@ public class MultiRabbitConnectionFactoryCreatorMap {
         }
         return multiRabbitProperties.getConnections().entrySet().stream().collect(Collectors.toMap(
                 Map.Entry::getKey,
-                e -> new RabbitConnectionFactoryCreator(e.getValue(), null)));
+                e -> new RabbitConnectionFactoryCreator(e.getValue())));
     }
 
     Map<String, RabbitConnectionFactoryCreator> getMap() {
