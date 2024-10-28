@@ -26,6 +26,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -120,6 +121,7 @@ public class MultiRabbitAutoConfiguration {
          * @return the empty wrapper if non is provided.
          */
         @Bean
+        // TODO github.com/rwanderc/spring-multirabbit/issues/2
         @ConditionalOnMissingBean
         public MultiRabbitConnectionFactoryWrapper externalEmptyWrapper() {
             return new MultiRabbitConnectionFactoryWrapper();
@@ -148,11 +150,12 @@ public class MultiRabbitAutoConfiguration {
                 final ObjectProvider<CredentialsProvider> credentialsProvider,
                 final ObjectProvider<CredentialsRefreshService> credentialsRefreshService,
                 final ObjectProvider<ConnectionNameStrategy> connectionNameStrategy,
-                final ObjectProvider<ConnectionFactoryCustomizer> connectionFactoryCustomizers) throws Exception {
+                final ObjectProvider<ConnectionFactoryCustomizer> connectionFactoryCustomizers,
+                final ObjectProvider<SslBundles> sslBundles) throws Exception {
             final MultiRabbitConnectionFactoryWrapper internalWrapper
                     = instantiateConnectionFactories(rabbitConnectionDetails, multiRabbitProperties,
                     multiRabbitConnectionDetailsMap, resourceLoader, credentialsProvider, credentialsRefreshService,
-                    connectionNameStrategy, connectionFactoryCustomizers);
+                    connectionNameStrategy, connectionFactoryCustomizers, sslBundles);
             final MultiRabbitConnectionFactoryWrapper aggregatedWrapper
                     = aggregateConnectionFactoryWrappers(internalWrapper, externalWrapper);
 
@@ -200,7 +203,8 @@ public class MultiRabbitAutoConfiguration {
                 final ObjectProvider<CredentialsProvider> credentialsProvider,
                 final ObjectProvider<CredentialsRefreshService> credentialsRefreshService,
                 final ObjectProvider<ConnectionNameStrategy> connectionNameStrategy,
-                final ObjectProvider<ConnectionFactoryCustomizer> connectionFactoryCustomizer) throws Exception {
+                final ObjectProvider<ConnectionFactoryCustomizer> connectionFactoryCustomizer,
+                final ObjectProvider<SslBundles> sslBundles) throws Exception {
             final MultiRabbitConnectionFactoryWrapper wrapper = new MultiRabbitConnectionFactoryWrapper();
 
             final Map<String, RabbitProperties> propertiesMap = multiRabbitProperties != null
@@ -215,7 +219,7 @@ public class MultiRabbitAutoConfiguration {
 
                 final ConnectionFactory connectionFactory = buildConnectionFactory(connDetails,
                         multiRabbitConnectionFactoryCreator, resourceLoader, credentialsProvider,
-                        credentialsRefreshService, connectionNameStrategy, connectionFactoryCustomizer);
+                        credentialsRefreshService, connectionNameStrategy, connectionFactoryCustomizer, sslBundles);
                 final SimpleRabbitListenerContainerFactory containerFactory = newContainerFactory(connectionFactory);
                 final RabbitAdmin rabbitAdmin = newRabbitAdmin(connectionFactory);
                 wrapper.addConnectionFactory(key, connectionFactory, containerFactory, rabbitAdmin);
@@ -235,7 +239,7 @@ public class MultiRabbitAutoConfiguration {
 
             final RabbitConnectionFactoryBeanConfigurer rabbitConnectionFactoryBeanConfigurer
                     = rabbitConnectionFactoryCreator.rabbitConnectionFactoryBeanConfigurer(resourceLoader,
-                    rabbitConnectionDetails, credentialsProvider, credentialsRefreshService);
+                    rabbitConnectionDetails, credentialsProvider, credentialsRefreshService, sslBundles);
             final CachingConnectionFactoryConfigurer rabbitCachingConnectionFactoryConfigurer
                     = rabbitConnectionFactoryCreator.rabbitConnectionFactoryConfigurer(rabbitConnectionDetails,
                     connectionNameStrategy);
@@ -257,10 +261,11 @@ public class MultiRabbitAutoConfiguration {
                 final ObjectProvider<CredentialsProvider> credentialsProvider,
                 final ObjectProvider<CredentialsRefreshService> credentialsRefreshService,
                 final ObjectProvider<ConnectionNameStrategy> connectionNameStrategy,
-                final ObjectProvider<ConnectionFactoryCustomizer> connectionFactoryCustomizer) throws Exception {
+                final ObjectProvider<ConnectionFactoryCustomizer> connectionFactoryCustomizer,
+                final ObjectProvider<SslBundles> sslBundles) throws Exception {
             final RabbitConnectionFactoryBeanConfigurer rabbitConnectionFactoryBeanConfigurer
                     = rabbitConnectionFactoryCreator.rabbitConnectionFactoryBeanConfigurer(resourceLoader,
-                    rabbitConnectionDetails, credentialsProvider, credentialsRefreshService);
+                    rabbitConnectionDetails, credentialsProvider, credentialsRefreshService, sslBundles);
             final CachingConnectionFactoryConfigurer rabbitCachingConnectionFactoryConfigurer
                     = rabbitConnectionFactoryCreator.rabbitConnectionFactoryConfigurer(rabbitConnectionDetails,
                     connectionNameStrategy);

@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 
 class ExternalConfigurationTest {
 
@@ -135,6 +136,8 @@ class ExternalConfigurationTest {
         private static final ConnectionFactory DEFAULT_CONNECTION_FACTORY = mock(ConnectionFactory.class);
 
         @Bean
+        // TODO github.com/rwanderc/spring-multirabbit/issues/2
+        @Primary
         @ConditionalOnClass(MultiRabbitConnectionFactoryWrapper.class)
         static MultiRabbitConnectionFactoryWrapper externalWrapper() {
             final MultiRabbitConnectionFactoryWrapper wrapper = new MultiRabbitConnectionFactoryWrapper();
