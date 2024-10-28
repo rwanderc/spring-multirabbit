@@ -30,7 +30,6 @@ import org.springframework.boot.test.context.assertj.AssertableApplicationContex
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -306,7 +305,5 @@ class MultiRabbitAutoConfigurationTest {
                 value = @Queue(QUEUE_2), key = ROUTING_KEY_2))
         void listenBroker2(final String message) {
         }
-
     }
-
 }

@@ -31,9 +31,10 @@ public class MultiRabbitConnectionFactoryWrapper {
      * @param fromWrapper The wrapper to copy from.
      */
     void putEntriesFrom(final MultiRabbitConnectionFactoryWrapper fromWrapper) {
-        if (fromWrapper != null) {
-            fromWrapper.getEntries().forEach(entries::put);
+        if (fromWrapper == null || fromWrapper.getEntries() == null || fromWrapper.getEntries().isEmpty()) {
+            return;
         }
+        entries.putAll(fromWrapper.getEntries());
     }
 
     /**
