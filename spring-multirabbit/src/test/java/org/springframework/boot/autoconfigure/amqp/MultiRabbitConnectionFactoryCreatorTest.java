@@ -76,9 +76,6 @@ class MultiRabbitConnectionFactoryCreatorTest {
     private RabbitConnectionDetails rabbitConnectionDetails;
 
     @Mock
-    private RabbitProperties secondaryRabbitProperties;
-
-    @Mock
     private MultiRabbitProperties multiRabbitProperties;
 
     @Mock
@@ -257,7 +254,7 @@ class MultiRabbitConnectionFactoryCreatorTest {
     @Test
     void shouldInstantiateMultiRabbitConnectionFactoryWrapperWithMultipleConnections() throws Exception {
         final MultiRabbitProperties multiRabbitProperties = new MultiRabbitProperties();
-        multiRabbitProperties.getConnections().put(DUMMY_KEY, secondaryRabbitProperties);
+        multiRabbitProperties.getConnections().put(DUMMY_KEY, new RabbitProperties());
         multiRabbitProperties.setDefaultConnection(DUMMY_KEY);
 
         final RabbitConnectionFactoryBeanConfigurer rabbitConnectionFactoryBeanConfigurer
@@ -314,7 +311,7 @@ class MultiRabbitConnectionFactoryCreatorTest {
     @Test
     void shouldInstantiateMultiRabbitConnectionFactoryWrapperWithDefaultAndMultipleConnections() throws Exception {
         final MultiRabbitProperties multiRabbitProperties = new MultiRabbitProperties();
-        multiRabbitProperties.getConnections().put(DUMMY_KEY, secondaryRabbitProperties);
+        multiRabbitProperties.getConnections().put(DUMMY_KEY, new RabbitProperties());
 
         final MultiRabbitConnectionFactoryCreatorMap multiRabbitConnectionFactoryCreatorMap
                 = new MultiRabbitConnectionFactoryCreatorMap(Map.of(DUMMY_KEY, multiRabbitConnectionFactoryCreator));
