@@ -53,9 +53,9 @@ public class MultiRabbitAutoConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(MultiRabbitAutoConfiguration.class);
 
     /**
-     * Returns a {@link RabbitConnectionFactoryCreator}.
+     * Returns a {@link RabbitConnectionFactoryCreator} to fulfill the default configuration.
      *
-     * @return a {@link RabbitConnectionFactoryCreator}.
+     * @return a {@link RabbitConnectionFactoryCreator} to fulfill the default configuration.
      */
     @Primary
     @Bean(MultiRabbitConstants.CONNECTION_FACTORY_CREATOR_BEAN_NAME)
@@ -103,6 +103,7 @@ public class MultiRabbitAutoConfiguration {
          * @return the empty wrapper if non is provided.
          */
         @Bean
+        // TODO github.com/rwanderc/spring-multirabbit/issues/2
         @ConditionalOnMissingBean
         public MultiRabbitConnectionFactoryWrapper externalEmptyWrapper() {
             return new MultiRabbitConnectionFactoryWrapper();
@@ -201,7 +202,8 @@ public class MultiRabbitAutoConfiguration {
                         = springFactoryCreator.rabbitConnectionFactory(rabbitConnectionFactoryBeanConfigurer,
                         rabbitCachingConnectionFactoryConfigurer,
                         connectionFactoryCustomizer);
-                final SimpleRabbitListenerContainerFactory containerFactory = newContainerFactory(connectionFactory);
+                final SimpleRabbitListenerContainerFactory containerFactory
+                        = newContainerFactory(connectionFactory, entry.getValue());
                 final RabbitAdmin rabbitAdmin = newRabbitAdmin(connectionFactory);
                 wrapper.addConnectionFactory(entry.getKey(), connectionFactory, containerFactory, rabbitAdmin);
             }
@@ -238,9 +240,12 @@ public class MultiRabbitAutoConfiguration {
         /**
          * Registers the ContainerFactory bean.
          */
-        private SimpleRabbitListenerContainerFactory newContainerFactory(final ConnectionFactory connectionFactory) {
+        private SimpleRabbitListenerContainerFactory newContainerFactory(final ConnectionFactory connectionFactory,
+                                                                         final RabbitProperties rabbitProperties) {
             final SimpleRabbitListenerContainerFactory containerFactory = new SimpleRabbitListenerContainerFactory();
-            containerFactory.setConnectionFactory(connectionFactory);
+            final SimpleRabbitListenerContainerFactoryConfigurer configurer
+                    = new SimpleRabbitListenerContainerFactoryConfigurer(rabbitProperties);
+            configurer.configure(containerFactory, connectionFactory);
             return containerFactory;
         }
 
