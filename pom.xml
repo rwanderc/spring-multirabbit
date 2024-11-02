@@ -46,6 +46,7 @@
         <java.version>1.8</java.version>
 
         <springboot.version>2.7.18</springboot.version>
+        <awaitility.version>4.2.2</awaitility.version>
         <testcontainers-rabbitmq.version>1.17.1</testcontainers-rabbitmq.version>
         <java-jna.version>5.8.0</java-jna.version>
 
