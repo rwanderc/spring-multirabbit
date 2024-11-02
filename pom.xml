@@ -47,6 +47,7 @@
 
         <springboot.version>3.0.0</springboot.version>
         <javax-validation.version>2.0.1.Final</javax-validation.version>
+        <awaitility.version>4.2.2</awaitility.version>
         <testcontainers-rabbitmq.version>1.17.1</testcontainers-rabbitmq.version>
         <java-jna.version>5.8.0</java-jna.version>
 
