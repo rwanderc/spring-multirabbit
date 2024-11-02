@@ -220,7 +220,8 @@ public class MultiRabbitAutoConfiguration {
                 final ConnectionFactory connectionFactory = buildConnectionFactory(connDetails,
                         multiRabbitConnectionFactoryCreator, resourceLoader, credentialsProvider,
                         credentialsRefreshService, connectionNameStrategy, connectionFactoryCustomizer, sslBundles);
-                final SimpleRabbitListenerContainerFactory containerFactory = newContainerFactory(connectionFactory);
+                final SimpleRabbitListenerContainerFactory containerFactory
+                        = newContainerFactory(connectionFactory, propertiesMap.get(key));
                 final RabbitAdmin rabbitAdmin = newRabbitAdmin(connectionFactory);
                 wrapper.addConnectionFactory(key, connectionFactory, containerFactory, rabbitAdmin);
             }
@@ -277,9 +278,12 @@ public class MultiRabbitAutoConfiguration {
         /**
          * Registers the ContainerFactory bean.
          */
-        private SimpleRabbitListenerContainerFactory newContainerFactory(final ConnectionFactory connectionFactory) {
+        private SimpleRabbitListenerContainerFactory newContainerFactory(final ConnectionFactory connectionFactory,
+                                                                         final RabbitProperties rabbitProperties) {
             final SimpleRabbitListenerContainerFactory containerFactory = new SimpleRabbitListenerContainerFactory();
-            containerFactory.setConnectionFactory(connectionFactory);
+            final SimpleRabbitListenerContainerFactoryConfigurer configurer
+                    = new SimpleRabbitListenerContainerFactoryConfigurer(rabbitProperties);
+            configurer.configure(containerFactory, connectionFactory);
             return containerFactory;
         }
 
